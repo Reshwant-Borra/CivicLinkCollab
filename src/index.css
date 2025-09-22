@@ -1,0 +1,272 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* CivicLink Brand Colors */
+    --background: 210 47% 11%;
+    --foreground: 0 0% 98%;
+
+    --card: 210 40% 15%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 210 40% 15%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 210 100% 60%;
+    --primary-foreground: 210 47% 11%;
+
+    --secondary: 210 40% 20%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 210 30% 25%;
+    --muted-foreground: 210 15% 70%;
+
+    --accent: 8 90% 65%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 210 30% 25%;
+    --input: 210 40% 20%;
+    --ring: 210 100% 60%;
+
+    --radius: 1rem;
+
+    /* CivicLink Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(210 100% 60%), hsl(8 90% 65%));
+    --gradient-hero: linear-gradient(135deg, hsl(210 47% 11%), hsl(210 40% 20%));
+    --gradient-card: linear-gradient(145deg, hsl(210 40% 15% / 0.8), hsl(210 30% 18% / 0.9));
+    --gradient-subtle: linear-gradient(180deg, hsl(210 40% 15% / 0.5), hsl(210 40% 18% / 0.8));
+
+    /* CivicLink Shadows */
+    --shadow-primary: 0 10px 40px -10px hsl(210 100% 60% / 0.3);
+    --shadow-card: 0 8px 32px -8px hsl(210 47% 11% / 0.4);
+    --shadow-glow: 0 0 40px hsl(210 100% 60% / 0.2);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --transition-fast: all 0.2s ease-out;
+    --transition-slow: all 0.6s ease-out;
+
+    --sidebar-background: 210 40% 15%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 210 100% 60%;
+    --sidebar-primary-foreground: 210 47% 11%;
+    --sidebar-accent: 210 40% 20%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 210 30% 25%;
+    --sidebar-ring: 210 100% 60%;
+  }
+
+  .dark {
+    /* Same as root for consistent CivicLink branding */
+    --background: 210 47% 11%;
+    --foreground: 0 0% 98%;
+    --card: 210 40% 15%;
+    --card-foreground: 0 0% 98%;
+    --popover: 210 40% 15%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 210 100% 60%;
+    --primary-foreground: 210 47% 11%;
+    --secondary: 210 40% 20%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 210 30% 25%;
+    --muted-foreground: 210 15% 70%;
+    --accent: 8 90% 65%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 210 30% 25%;
+    --input: 210 40% 20%;
+    --ring: 210 100% 60%;
+    --sidebar-background: 210 40% 15%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 210 100% 60%;
+    --sidebar-primary-foreground: 210 47% 11%;
+    --sidebar-accent: 210 40% 20%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 210 30% 25%;
+    --sidebar-ring: 210 100% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    scroll-behavior: smooth;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  .animate-fade-in-delay-1 {
+    animation: fadeInUp 0.8s ease-out 0.2s forwards;
+    opacity: 0;
+  }
+
+  .animate-fade-in-delay-2 {
+    animation: fadeInUp 0.8s ease-out 0.4s forwards;
+    opacity: 0;
+  }
+
+  .animate-fade-in-delay-3 {
+    animation: fadeInUp 0.8s ease-out 0.6s forwards;
+    opacity: 0;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.5s ease-out forwards;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  .animate-slide-in-left {
+    animation: slideInLeft 0.8s ease-out forwards;
+  }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.8s ease-out forwards;
+  }
+
+  .hover-lift {
+    transition: var(--transition-smooth);
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-glow);
+  }
+
+  .hover-glow {
+    transition: var(--transition-smooth);
+  }
+  
+  .hover-glow:hover {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .hover-scale {
+    transition: var(--transition-smooth);
+  }
+  
+  .hover-scale:hover {
+    transform: scale(1.05);
+  }
+
+  .smooth-gradient {
+    background-size: 200% 200%;
+    animation: gradientShift 4s ease infinite;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 20px hsl(210 100% 60% / 0.2);
+  }
+  to {
+    box-shadow: 0 0 30px hsl(210 100% 60% / 0.4);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

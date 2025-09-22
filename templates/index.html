@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CivicLink - Translation Service</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">CivicLink Translation Service</h1>
+            <p class="text-xl text-gray-600 mb-8">Efficient translation service for civic engagement</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <!-- Translation Assistant -->
+            <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                <div class="flex items-center gap-3 mb-4">
+                    <i data-lucide="languages" class="h-8 w-8 text-blue-600"></i>
+                    <h2 class="text-2xl font-semibold">Translation Assistant</h2>
+                </div>
+                <p class="text-gray-600 mb-6">
+                    Translate large text efficiently with automatic chunking and quality indicators. 
+                    Perfect for civic documents and voter information.
+                </p>
+                <a href="/translation-assistant" 
+                   class="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition-colors">
+                    <i data-lucide="arrow-right" class="h-4 w-4"></i>
+                    Start Translating
+                </a>
+            </div>
+
+            <!-- Help & Language Settings -->
+            <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                <div class="flex items-center gap-3 mb-4">
+                    <i data-lucide="help-circle" class="h-8 w-8 text-green-600"></i>
+                    <h2 class="text-2xl font-semibold">Help & Settings</h2>
+                </div>
+                <p class="text-gray-600 mb-6">
+                    Get help, change language settings, and customize accessibility options 
+                    for the best user experience.
+                </p>
+                <a href="/help-language" 
+                   class="inline-flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-md hover:bg-green-700 transition-colors">
+                    <i data-lucide="arrow-right" class="h-4 w-4"></i>
+                    Get Help
+                </a>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <div class="mt-16 max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-8">Key Features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="text-center p-6">
+                    <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="zap" class="h-8 w-8 text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Efficient Translation</h3>
+                    <p class="text-gray-600">Automatic text chunking for large documents with quality scoring</p>
+                </div>
+                
+                <div class="text-center p-6">
+                    <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="globe" class="h-8 w-8 text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Multi-Language Support</h3>
+                    <p class="text-gray-600">Support for Spanish, Chinese, Arabic, Hindi, Korean, Vietnamese, and Tagalog</p>
+                </div>
+                
+                <div class="text-center p-6">
+                    <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="accessibility" class="h-8 w-8 text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Accessibility</h3>
+                    <p class="text-gray-600">High contrast mode, large text, and audio support for all users</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- API Status -->
+        <div class="mt-16 max-w-2xl mx-auto">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                    <i data-lucide="activity" class="h-5 w-5 text-green-600"></i>
+                    Service Status
+                </h3>
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center">
+                        <span>Translation Service</span>
+                        <span class="text-green-600 font-medium">Online</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span>Database</span>
+                        <span class="text-green-600 font-medium">Connected</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span>Deep Translator</span>
+                        <span class="text-green-600 font-medium">Ready</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>

@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translation Assistant - CivicLink</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        .quality-indicator {
+            background: linear-gradient(90deg, #ef4444 0%, #f59e0b 50%, #10b981 100%);
+        }
+        .quality-score {
+            background: linear-gradient(90deg, #ef4444 0%, #f59e0b 50%, #10b981 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen pb-20">
+    <div class="px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-bold mb-4">Translation Assistant</h1>
+                <p class="text-gray-600">
+                    Search civic terms in your language with plain explanations
+                </p>
+            </div>
+
+            <!-- Translation Input Section -->
+            <div class="bg-white rounded-lg shadow-md mb-8 p-6">
+                <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                    <i data-lucide="languages" class="h-5 w-5"></i>
+                    Translate Large Text
+                </h2>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Text to Translate</label>
+                        <textarea 
+                            id="textInput" 
+                            rows="6" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Enter the text you want to translate..."
+                        ></textarea>
+                        <p class="text-sm text-gray-500 mt-1">Supports large text with automatic chunking for better performance</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Target Language</label>
+                            <select id="targetLanguage" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <optgroup label="🏛️ Popular Civic Languages">
+                                    <option value="spanish">🇪🇸 Spanish (Español)</option>
+                                    <option value="chinese (simplified)">🇨🇳 Chinese (中文)</option>
+                                    <option value="arabic">🇸🇦 Arabic (العربية)</option>
+                                    <option value="hindi">🇮🇳 Hindi (हिन्दी)</option>
+                                    <option value="korean">🇰🇷 Korean (한국어)</option>
+                                    <option value="vietnamese">🇻🇳 Vietnamese (Tiếng Việt)</option>
+                                    <option value="filipino">🇵🇭 Filipino (Tagalog)</option>
+                                    <option value="french">🇫🇷 French (Français)</option>
+                                    <option value="german">🇩🇪 German (Deutsch)</option>
+                                    <option value="portuguese">🇵🇹 Portuguese (Português)</option>
+                                    <option value="japanese">🇯🇵 Japanese (日本語)</option>
+                                    <option value="russian">🇷🇺 Russian (Русский)</option>
+                                </optgroup>
+                                <optgroup label="🌍 All Languages (A-Z)">
+                                    <option value="afrikaans">Afrikaans</option>
+                                    <option value="albanian">Albanian</option>
+                                    <option value="amharic">Amharic</option>
+                                    <option value="armenian">Armenian</option>
+                                    <option value="azerbaijani">Azerbaijani</option>
+                                    <option value="basque">Basque</option>
+                                    <option value="belarusian">Belarusian</option>
+                                    <option value="bengali">Bengali</option>
+                                    <option value="bosnian">Bosnian</option>
+                                    <option value="bulgarian">Bulgarian</option>
+                                    <option value="catalan">Catalan</option>
+                                    <option value="cebuano">Cebuano</option>
+                                    <option value="chichewa">Chichewa</option>
+                                    <option value="chinese (traditional)">Chinese (Traditional)</option>
+                                    <option value="corsican">Corsican</option>
+                                    <option value="croatian">Croatian</option>
+                                    <option value="czech">Czech</option>
+                                    <option value="danish">Danish</option>
+                                    <option value="dutch">Dutch</option>
+                                    <option value="esperanto">Esperanto</option>
+                                    <option value="estonian">Estonian</option>
+                                    <option value="finnish">Finnish</option>
+                                    <option value="frisian">Frisian</option>
+                                    <option value="galician">Galician</option>
+                                    <option value="georgian">Georgian</option>
+                                    <option value="greek">Greek</option>
+                                    <option value="gujarati">Gujarati</option>
+                                    <option value="haitian creole">Haitian Creole</option>
+                                    <option value="hausa">Hausa</option>
+                                    <option value="hawaiian">Hawaiian</option>
+                                    <option value="hebrew">Hebrew</option>
+                                    <option value="hmong">Hmong</option>
+                                    <option value="hungarian">Hungarian</option>
+                                    <option value="icelandic">Icelandic</option>
+                                    <option value="igbo">Igbo</option>
+                                    <option value="indonesian">Indonesian</option>
+                                    <option value="irish">Irish</option>
+                                    <option value="italian">Italian</option>
+                                    <option value="javanese">Javanese</option>
+                                    <option value="kannada">Kannada</option>
+                                    <option value="kazakh">Kazakh</option>
+                                    <option value="khmer">Khmer</option>
+                                    <option value="kinyarwanda">Kinyarwanda</option>
+                                    <option value="konkani">Konkani</option>
+                                    <option value="krio">Krio</option>
+                                    <option value="kurdish (kurmanji)">Kurdish (Kurmanji)</option>
+                                    <option value="kurdish (sorani)">Kurdish (Sorani)</option>
+                                    <option value="kyrgyz">Kyrgyz</option>
+                                    <option value="lao">Lao</option>
+                                    <option value="latin">Latin</option>
+                                    <option value="latvian">Latvian</option>
+                                    <option value="lingala">Lingala</option>
+                                    <option value="lithuanian">Lithuanian</option>
+                                    <option value="luganda">Luganda</option>
+                                    <option value="luxembourgish">Luxembourgish</option>
+                                    <option value="macedonian">Macedonian</option>
+                                    <option value="maithili">Maithili</option>
+                                    <option value="malagasy">Malagasy</option>
+                                    <option value="malay">Malay</option>
+                                    <option value="malayalam">Malayalam</option>
+                                    <option value="maltese">Maltese</option>
+                                    <option value="maori">Maori</option>
+                                    <option value="marathi">Marathi</option>
+                                    <option value="meiteilon (manipuri)">Meiteilon (Manipuri)</option>
+                                    <option value="mizo">Mizo</option>
+                                    <option value="mongolian">Mongolian</option>
+                                    <option value="myanmar">Myanmar</option>
+                                    <option value="nepali">Nepali</option>
+                                    <option value="norwegian">Norwegian</option>
+                                    <option value="odia (oriya)">Odia (Oriya)</option>
+                                    <option value="oromo">Oromo</option>
+                                    <option value="pashto">Pashto</option>
+                                    <option value="persian">Persian</option>
+                                    <option value="polish">Polish</option>
+                                    <option value="punjabi">Punjabi</option>
+                                    <option value="quechua">Quechua</option>
+                                    <option value="romanian">Romanian</option>
+                                    <option value="samoan">Samoan</option>
+                                    <option value="sanskrit">Sanskrit</option>
+                                    <option value="scots gaelic">Scots Gaelic</option>
+                                    <option value="sepedi">Sepedi</option>
+                                    <option value="serbian">Serbian</option>
+                                    <option value="sesotho">Sesotho</option>
+                                    <option value="shona">Shona</option>
+                                    <option value="sindhi">Sindhi</option>
+                                    <option value="sinhala">Sinhala</option>
+                                    <option value="slovak">Slovak</option>
+                                    <option value="slovenian">Slovenian</option>
+                                    <option value="somali">Somali</option>
+                                    <option value="sundanese">Sundanese</option>
+                                    <option value="swahili">Swahili</option>
+                                    <option value="swedish">Swedish</option>
+                                    <option value="tajik">Tajik</option>
+                                    <option value="tamil">Tamil</option>
+                                    <option value="tatar">Tatar</option>
+                                    <option value="telugu">Telugu</option>
+                                    <option value="thai">Thai</option>
+                                    <option value="tigrinya">Tigrinya</option>
+                                    <option value="tsonga">Tsonga</option>
+                                    <option value="turkish">Turkish</option>
+                                    <option value="turkmen">Turkmen</option>
+                                    <option value="twi">Twi</option>
+                                    <option value="ukrainian">Ukrainian</option>
+                                    <option value="urdu">Urdu</option>
+                                    <option value="uyghur">Uyghur</option>
+                                    <option value="uzbek">Uzbek</option>
+                                    <option value="welsh">Welsh</option>
+                                    <option value="xhosa">Xhosa</option>
+                                    <option value="yiddish">Yiddish</option>
+                                    <option value="yoruba">Yoruba</option>
+                                    <option value="zulu">Zulu</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Source Language</label>
+                            <select id="sourceLanguage" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="auto">Auto-detect</option>
+                                <option value="english">English</option>
+                                <option value="spanish">Spanish</option>
+                                <option value="chinese (simplified)">Chinese (Simplified)</option>
+                                <option value="arabic">Arabic</option>
+                                <option value="hindi">Hindi</option>
+                                <option value="korean">Korean</option>
+                                <option value="vietnamese">Vietnamese</option>
+                                <option value="filipino">Filipino</option>
+                                <option value="french">French</option>
+                                <option value="german">German</option>
+                                <option value="portuguese">Portuguese</option>
+                                <option value="japanese">Japanese</option>
+                                <option value="russian">Russian</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button 
+                        id="translateBtn" 
+                        class="w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-center gap-2"
+                    >
+                        <i data-lucide="languages" class="h-5 w-5"></i>
+                        <span>Translate Text</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Translation Result -->
+            <div id="translationResult" class="bg-white rounded-lg shadow-md mb-8 p-6 hidden">
+                <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <i data-lucide="check-circle" class="h-5 w-5 text-green-600"></i>
+                    Translation Result
+                </h3>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Translated Text</label>
+                        <div id="translatedText" class="p-4 bg-gray-50 rounded-md border min-h-[100px]"></div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="text-center p-3 bg-blue-50 rounded-md">
+                            <div class="text-2xl font-bold text-blue-600" id="qualityScore">--</div>
+                            <div class="text-sm text-gray-600">Quality Score</div>
+                        </div>
+                        <div class="text-center p-3 bg-green-50 rounded-md">
+                            <div class="text-2xl font-bold text-green-600" id="charCount">--</div>
+                            <div class="text-sm text-gray-600">Characters</div>
+                        </div>
+                        <div class="text-center p-3 bg-purple-50 rounded-md">
+                            <div class="text-2xl font-bold text-purple-600" id="chunksProcessed">--</div>
+                            <div class="text-sm text-gray-600">Chunks</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-2">
+                        <button id="copyBtn" class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 flex items-center gap-2">
+                            <i data-lucide="copy" class="h-4 w-4"></i>
+                            Copy Translation
+                        </button>
+                        <button id="saveBtn" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center gap-2">
+                            <i data-lucide="save" class="h-4 w-4"></i>
+                            Save Translation
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search Section -->
+            <div class="bg-white rounded-lg shadow-md mb-8 p-6">
+                <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                    <i data-lucide="search" class="h-5 w-5"></i>
+                    Search Civic Terms
+                </h2>
+                
+                <div class="space-y-4">
+                    <div class="flex gap-3">
+                        <input 
+                            type="text" 
+                            id="searchInput"
+                            value="{{ search_term }}"
+                            placeholder="Search civic terms in your language..."
+                            class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+                    
+                    <!-- Language Selection -->
+                    <div class="flex flex-wrap gap-2">
+                        {% for lang in languages %}
+                        <button 
+                            class="language-btn px-3 py-2 rounded-md border flex items-center gap-2 {% if lang.name == selected_language %}bg-blue-600 text-white border-blue-600{% else %}bg-white text-gray-700 border-gray-300 hover:bg-gray-50{% endif %}"
+                            data-language="{{ lang.name }}"
+                        >
+                            <span>{{ lang.flag }}</span>
+                            {{ lang.name }}
+                        </button>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Custom Civic Terms Translation -->
+            <div class="bg-white rounded-lg shadow-md mb-8 p-6">
+                <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                    <i data-lucide="book-open" class="h-5 w-5"></i>
+                    Translate Civic Terms
+                </h2>
+                
+                <div class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Civic Term</label>
+                            <input 
+                                type="text" 
+                                id="civicTermInput"
+                                placeholder="Enter a civic term (e.g., 'Voter Registration')"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Target Language</label>
+                            <select id="civicTermLanguage" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="spanish">🇪🇸 Spanish</option>
+                                <option value="chinese (simplified)">🇨🇳 Chinese</option>
+                                <option value="arabic">🇸🇦 Arabic</option>
+                                <option value="hindi">🇮🇳 Hindi</option>
+                                <option value="korean">🇰🇷 Korean</option>
+                                <option value="vietnamese">🇻🇳 Vietnamese</option>
+                                <option value="filipino">🇵🇭 Filipino</option>
+                                <option value="french">🇫🇷 French</option>
+                                <option value="german">🇩🇪 German</option>
+                                <option value="portuguese">🇵🇹 Portuguese</option>
+                                <option value="japanese">🇯🇵 Japanese</option>
+                                <option value="russian">🇷🇺 Russian</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button 
+                        id="translateCivicTermBtn" 
+                        class="w-full bg-green-600 text-white py-3 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 flex items-center justify-center gap-2"
+                    >
+                        <i data-lucide="languages" class="h-5 w-5"></i>
+                        <span>Translate Civic Term</span>
+                    </button>
+                    
+                    <div id="civicTermResult" class="hidden p-4 bg-green-50 rounded-md border border-green-200">
+                        <h4 class="font-semibold text-green-800 mb-2">Translation Result:</h4>
+                        <p id="civicTermTranslated" class="text-green-700"></p>
+                        <div class="mt-2 flex gap-2">
+                            <button id="copyCivicTermBtn" class="px-3 py-1 bg-green-600 text-white rounded text-sm hover:bg-green-700">
+                                Copy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Translation Cards -->
+            <div id="translationCards" class="space-y-4">
+                {% for term in translation_data %}
+                <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-6">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h3 class="text-lg font-semibold civic-term" data-term="{{ term.english }}">{{ term.english }}</h3>
+                                <span class="px-2 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">{{ term.language }}</span>
+                            </div>
+                            <p class="text-xl font-medium text-blue-600 mb-3 civic-translation" data-original="{{ term.translated }}">{{ term.translated }}</p>
+                            <p class="text-gray-600 leading-relaxed civic-explanation" data-original="{{ term.explanation }}">{{ term.explanation }}</p>
+                        </div>
+                        <div class="ml-4 flex flex-col gap-2">
+                            <button 
+                                class="audio-btn px-3 py-2 border border-gray-300 rounded-md hover:bg-gray-50 flex items-center gap-2"
+                                data-audio="{{ term.audio_url }}"
+                            >
+                                <i data-lucide="volume-2" class="h-4 w-4"></i>
+                                Listen
+                            </button>
+                            <button 
+                                class="translate-term-btn px-3 py-2 border border-blue-300 rounded-md hover:bg-blue-50 flex items-center gap-2"
+                                data-term="{{ term.english }}"
+                            >
+                                <i data-lucide="languages" class="h-4 w-4"></i>
+                                Translate
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-2">
+                        <button class="px-3 py-2 border border-gray-300 rounded-md hover:bg-gray-50 flex items-center gap-2">
+                            <i data-lucide="flag" class="h-4 w-4"></i>
+                            Report Translation Issue
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- No Results -->
+            {% if not translation_data %}
+            <div class="bg-white rounded-lg shadow-md text-center py-12">
+                <i data-lucide="alert-triangle" class="h-12 w-12 mx-auto mb-4 text-gray-400"></i>
+                <h3 class="text-lg font-semibold mb-2">No translations found</h3>
+                <p class="text-gray-600">
+                    Try searching for different terms or check back later as we add more translations.
+                </p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Translation functionality
+        const translateBtn = document.getElementById('translateBtn');
+        const textInput = document.getElementById('textInput');
+        const targetLanguage = document.getElementById('targetLanguage');
+        const sourceLanguage = document.getElementById('sourceLanguage');
+        const translationResult = document.getElementById('translationResult');
+        const translatedText = document.getElementById('translatedText');
+        const qualityScore = document.getElementById('qualityScore');
+        const charCount = document.getElementById('charCount');
+        const chunksProcessed = document.getElementById('chunksProcessed');
+        const copyBtn = document.getElementById('copyBtn');
+        const saveBtn = document.getElementById('saveBtn');
+
+        translateBtn.addEventListener('click', async () => {
+            const text = textInput.value.trim();
+            if (!text) {
+                alert('Please enter text to translate');
+                return;
+            }
+
+            translateBtn.disabled = true;
+            translateBtn.innerHTML = '<i data-lucide="loader-2" class="h-5 w-5 animate-spin"></i> Translating...';
+            lucide.createIcons();
+
+            try {
+                const response = await fetch('/api/translate-text', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        text: text,
+                        target_language: targetLanguage.value,
+                        source_language: sourceLanguage.value
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.error) {
+                    alert('Translation failed: ' + result.error);
+                    return;
+                }
+
+                // Display results
+                translatedText.textContent = result.translated_text;
+                qualityScore.textContent = Math.round(result.quality_score * 100) + '%';
+                charCount.textContent = result.total_characters.toLocaleString();
+                chunksProcessed.textContent = result.chunks_processed;
+                
+                translationResult.classList.remove('hidden');
+                translationResult.scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                console.error('Translation error:', error);
+                alert('Translation failed. Please try again.');
+            } finally {
+                translateBtn.disabled = false;
+                translateBtn.innerHTML = '<i data-lucide="languages" class="h-5 w-5"></i> <span>Translate Text</span>';
+                lucide.createIcons();
+            }
+        });
+
+        // Copy functionality
+        copyBtn.addEventListener('click', () => {
+            const text = translatedText.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = copyBtn.innerHTML;
+                copyBtn.innerHTML = '<i data-lucide="check" class="h-4 w-4"></i> Copied!';
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalText;
+                    lucide.createIcons();
+                }, 2000);
+            });
+        });
+
+        // Save functionality
+        saveBtn.addEventListener('click', () => {
+            // In a real app, this would save to user's saved translations
+            alert('Translation saved to your collection!');
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const languageBtns = document.querySelectorAll('.language-btn');
+
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value;
+            const selectedLang = document.querySelector('.language-btn.bg-blue-600')?.dataset.language || '';
+            
+            // Update URL without page reload
+            const url = new URL(window.location);
+            url.searchParams.set('search', searchTerm);
+            if (selectedLang) url.searchParams.set('language', selectedLang);
+            window.history.pushState({}, '', url);
+            
+            // Filter cards
+            filterTranslationCards(searchTerm, selectedLang);
+        });
+
+        // Language selection
+        languageBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active button
+                languageBtns.forEach(b => {
+                    b.classList.remove('bg-blue-600', 'text-white', 'border-blue-600');
+                    b.classList.add('bg-white', 'text-gray-700', 'border-gray-300', 'hover:bg-gray-50');
+                });
+                btn.classList.remove('bg-white', 'text-gray-700', 'border-gray-300', 'hover:bg-gray-50');
+                btn.classList.add('bg-blue-600', 'text-white', 'border-blue-600');
+
+                const language = btn.dataset.language;
+                const searchTerm = searchInput.value;
+                
+                // Update URL
+                const url = new URL(window.location);
+                url.searchParams.set('language', language);
+                if (searchTerm) url.searchParams.set('search', searchTerm);
+                window.history.pushState({}, '', url);
+                
+                // Filter cards
+                filterTranslationCards(searchTerm, language);
+            });
+        });
+
+        function filterTranslationCards(searchTerm, language) {
+            const cards = document.querySelectorAll('#translationCards > div');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const english = card.querySelector('h3').textContent.toLowerCase();
+                const translated = card.querySelector('.text-blue-600').textContent.toLowerCase();
+                const explanation = card.querySelector('.text-gray-600').textContent.toLowerCase();
+                const cardLanguage = card.querySelector('.bg-gray-100').textContent.toLowerCase();
+
+                const matchesSearch = !searchTerm || 
+                    english.includes(searchTerm.toLowerCase()) ||
+                    translated.includes(searchTerm.toLowerCase()) ||
+                    explanation.includes(searchTerm.toLowerCase());
+
+                const matchesLanguage = !language || cardLanguage === language.toLowerCase();
+
+                if (matchesSearch && matchesLanguage) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Show/hide no results message
+            const noResults = document.querySelector('.text-center.py-12');
+            if (noResults) {
+                noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+            }
+        }
+
+        // Custom civic term translation
+        const translateCivicTermBtn = document.getElementById('translateCivicTermBtn');
+        const civicTermInput = document.getElementById('civicTermInput');
+        const civicTermLanguage = document.getElementById('civicTermLanguage');
+        const civicTermResult = document.getElementById('civicTermResult');
+        const civicTermTranslated = document.getElementById('civicTermTranslated');
+        const copyCivicTermBtn = document.getElementById('copyCivicTermBtn');
+
+        translateCivicTermBtn.addEventListener('click', async () => {
+            const term = civicTermInput.value.trim();
+            if (!term) {
+                alert('Please enter a civic term to translate');
+                return;
+            }
+
+            translateCivicTermBtn.disabled = true;
+            translateCivicTermBtn.innerHTML = '<i data-lucide="loader-2" class="h-5 w-5 animate-spin"></i> Translating...';
+            lucide.createIcons();
+
+            try {
+                const response = await fetch('/api/translate-civic-term', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        term: term,
+                        target_language: civicTermLanguage.value
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.error) {
+                    alert('Translation failed: ' + result.error);
+                    return;
+                }
+
+                civicTermTranslated.textContent = result.translated_term;
+                civicTermResult.classList.remove('hidden');
+                civicTermResult.scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                console.error('Civic term translation error:', error);
+                alert('Translation failed. Please try again.');
+            } finally {
+                translateCivicTermBtn.disabled = false;
+                translateCivicTermBtn.innerHTML = '<i data-lucide="languages" class="h-5 w-5"></i> <span>Translate Civic Term</span>';
+                lucide.createIcons();
+            }
+        });
+
+        // Copy civic term translation
+        copyCivicTermBtn.addEventListener('click', () => {
+            const text = civicTermTranslated.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = copyCivicTermBtn.textContent;
+                copyCivicTermBtn.textContent = 'Copied!';
+                setTimeout(() => {
+                    copyCivicTermBtn.textContent = originalText;
+                }, 2000);
+            });
+        });
+
+        // Translate individual civic terms
+        document.querySelectorAll('.translate-term-btn').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                const term = e.currentTarget.dataset.term;
+                const card = e.currentTarget.closest('.bg-white');
+                const translationElement = card.querySelector('.civic-translation');
+                const explanationElement = card.querySelector('.civic-explanation');
+                
+                // Show language selection modal
+                const language = prompt(`Select language for "${term}":\n\n1. Spanish\n2. Chinese\n3. Arabic\n4. Hindi\n5. Korean\n6. Vietnamese\n7. Filipino\n8. French\n9. German\n10. Portuguese\n11. Japanese\n12. Russian\n\nEnter number (1-12):`);
+                
+                const languageMap = {
+                    '1': 'spanish', '2': 'chinese (simplified)', '3': 'arabic', '4': 'hindi',
+                    '5': 'korean', '6': 'vietnamese', '7': 'filipino', '8': 'french',
+                    '9': 'german', '10': 'portuguese', '11': 'japanese', '12': 'russian'
+                };
+                
+                if (language && languageMap[language]) {
+                    const targetLang = languageMap[language];
+                    
+                    try {
+                        const response = await fetch('/api/translate-civic-term', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                term: term,
+                                target_language: targetLang
+                            })
+                        });
+
+                        const result = await response.json();
+
+                        if (result.error) {
+                            alert('Translation failed: ' + result.error);
+                            return;
+                        }
+
+                        // Update the translation
+                        translationElement.textContent = result.translated_term;
+                        translationElement.style.color = '#059669'; // Green color for translated text
+                        
+                        // Add a small indicator
+                        const indicator = document.createElement('span');
+                        indicator.textContent = ` (${targetLang})`;
+                        indicator.className = 'text-sm text-gray-500';
+                        translationElement.appendChild(indicator);
+
+                    } catch (error) {
+                        console.error('Term translation error:', error);
+                        alert('Translation failed. Please try again.');
+                    }
+                }
+            });
+        });
+
+        // Audio functionality
+        document.querySelectorAll('.audio-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const audioUrl = e.currentTarget.dataset.audio;
+                console.log('Playing audio:', audioUrl);
+                // In a real app, this would play the audio file
+                alert('Audio playback would start here');
+            });
+        });
+    </script>
+</body>
+</html>

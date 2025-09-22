@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help & Language Settings - CivicLink</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        .high-contrast {
+            filter: contrast(150%) brightness(110%);
+        }
+        .large-text {
+            font-size: 1.2em;
+        }
+        .large-text h1 { font-size: 2.5em; }
+        .large-text h2 { font-size: 2em; }
+        .large-text h3 { font-size: 1.5em; }
+        .large-text p { font-size: 1.2em; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen pb-20 {% if high_contrast %}high-contrast{% endif %} {% if large_text %}large-text{% endif %}">
+    <div class="px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-bold mb-4">Help & Language Settings</h1>
+                <p class="text-gray-600">
+                    Get support and customize your experience
+                </p>
+            </div>
+
+            <!-- Language Selection -->
+            <div class="bg-white rounded-lg shadow-md mb-8 p-6">
+                <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                    <i data-lucide="globe" class="h-5 w-5"></i>
+                    Language Settings
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Select Language</label>
+                        <select id="languageSelect" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            {% for lang in languages %}
+                            <option value="{{ lang.code }}" {% if lang.code == selected_language %}selected{% endif %}>
+                                {{ lang.flag }} {{ lang.name }} ({{ lang.native }})
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Current Language</label>
+                        <div class="flex items-center gap-2 p-3 bg-gray-100 rounded-lg">
+                            <span class="text-2xl" id="currentLanguageFlag">
+                                {% for lang in languages %}
+                                    {% if lang.code == selected_language %}{{ lang.flag }}{% endif %}
+                                {% endfor %}
+                            </span>
+                            <span class="font-medium" id="currentLanguageName">
+                                {% for lang in languages %}
+                                    {% if lang.code == selected_language %}{{ lang.name }}{% endif %}
+                                {% endfor %}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accessibility Settings -->
+            <div class="bg-white rounded-lg shadow-md mb-8 p-6">
+                <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                    <i data-lucide="settings" class="h-5 w-5"></i>
+                    Accessibility Settings
+                </h2>
+                
+                <div class="space-y-6">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="eye" class="h-5 w-5"></i>
+                            <div>
+                                <p class="font-medium">High Contrast Mode</p>
+                                <p class="text-sm text-gray-600">Increase contrast for better visibility</p>
+                            </div>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="highContrastToggle" class="sr-only peer" {% if high_contrast %}checked{% endif %}>
+                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                        </label>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="type" class="h-5 w-5"></i>
+                            <div>
+                                <p class="font-medium">Large Text</p>
+                                <p class="text-sm text-gray-600">Increase text size for easier reading</p>
+                            </div>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="largeTextToggle" class="sr-only peer" {% if large_text %}checked{% endif %}>
+                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                        </label>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="volume-2" class="h-5 w-5"></i>
+                            <div>
+                                <p class="font-medium">Audio Enabled</p>
+                                <p class="text-sm text-gray-600">Enable spoken instructions</p>
+                            </div>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="audioToggle" class="sr-only peer" {% if audio_enabled %}checked{% endif %}>
+                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ -->
+            <div class="bg-white rounded-lg shadow-md mb-8 p-6">
+                <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                    <i data-lucide="help-circle" class="h-5 w-5"></i>
+                    Frequently Asked Questions
+                </h2>
+                
+                <div class="space-y-4">
+                    {% for faq in faq_data %}
+                    <div class="border border-gray-200 rounded-lg">
+                        <button class="faq-question w-full px-4 py-3 text-left font-semibold flex items-center justify-between hover:bg-gray-50" data-target="faq-{{ loop.index }}">
+                            <span>{{ faq.question }}</span>
+                            <i data-lucide="chevron-down" class="h-4 w-4 transform transition-transform"></i>
+                        </button>
+                        <div id="faq-{{ loop.index }}" class="faq-answer hidden px-4 pb-3">
+                            <p class="text-gray-600 leading-relaxed">{{ faq.answer }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- SMS Shortcodes -->
+            <div class="bg-white rounded-lg shadow-md mb-8 p-6">
+                <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                    <i data-lucide="message-square" class="h-5 w-5"></i>
+                    SMS Shortcodes
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {% for shortcode in sms_shortcodes %}
+                    <div class="p-4 bg-gray-50 rounded-lg">
+                        <p class="font-medium mb-1">{{ shortcode.code }}</p>
+                        <p class="text-sm text-gray-600">{{ shortcode.description }}</p>
+                        <p class="text-xs text-gray-500 mt-2">Example: {{ shortcode.example }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Contact Support Modal -->
+            <div id="supportModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+                <div class="flex items-center justify-center min-h-screen p-4">
+                    <div class="bg-white rounded-lg max-w-md w-full p-6">
+                        <h3 class="text-lg font-semibold mb-4">Contact Support</h3>
+                        <form id="supportForm">
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                                    <input type="text" name="name" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                    <input type="email" name="email" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                                    <input type="text" name="subject" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                                    <textarea name="message" rows="4" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 mt-6">
+                                <button type="submit" class="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
+                                    Send Message
+                                </button>
+                                <button type="button" id="closeSupportModal" class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+                <button id="contactSupportBtn" class="flex-1 sm:flex-none bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 flex items-center justify-center gap-2">
+                    <i data-lucide="message-square" class="h-5 w-5"></i>
+                    Contact Support
+                </button>
+                <button class="flex-1 sm:flex-none border border-gray-300 text-gray-700 py-3 px-6 rounded-md hover:bg-gray-50 flex items-center justify-center gap-2">
+                    <i data-lucide="help-circle" class="h-5 w-5"></i>
+                    View All FAQs
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Language selection
+        const languageSelect = document.getElementById('languageSelect');
+        const currentLanguageFlag = document.getElementById('currentLanguageFlag');
+        const currentLanguageName = document.getElementById('currentLanguageName');
+
+        languageSelect.addEventListener('change', async (e) => {
+            const selectedLanguage = e.target.value;
+            const selectedOption = e.target.selectedOptions[0];
+            
+            // Update display
+            currentLanguageFlag.textContent = selectedOption.textContent.split(' ')[0];
+            currentLanguageName.textContent = selectedOption.textContent.split(' ')[1];
+            
+            // Save to backend
+            try {
+                const response = await fetch('/api/update-language', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ language: selectedLanguage })
+                });
+
+                const result = await response.json();
+                if (result.error) {
+                    console.error('Failed to update language:', result.error);
+                }
+            } catch (error) {
+                console.error('Language update error:', error);
+            }
+        });
+
+        // Accessibility toggles
+        const highContrastToggle = document.getElementById('highContrastToggle');
+        const largeTextToggle = document.getElementById('largeTextToggle');
+        const audioToggle = document.getElementById('audioToggle');
+
+        async function updateAccessibilitySetting(setting, value) {
+            try {
+                const response = await fetch('/api/update-accessibility', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ [setting]: value })
+                });
+
+                const result = await response.json();
+                if (result.error) {
+                    console.error('Failed to update accessibility setting:', result.error);
+                }
+            } catch (error) {
+                console.error('Accessibility update error:', error);
+            }
+        }
+
+        highContrastToggle.addEventListener('change', (e) => {
+            const enabled = e.target.checked;
+            document.body.classList.toggle('high-contrast', enabled);
+            updateAccessibilitySetting('high_contrast', enabled);
+        });
+
+        largeTextToggle.addEventListener('change', (e) => {
+            const enabled = e.target.checked;
+            document.body.classList.toggle('large-text', enabled);
+            updateAccessibilitySetting('large_text', enabled);
+        });
+
+        audioToggle.addEventListener('change', (e) => {
+            const enabled = e.target.checked;
+            updateAccessibilitySetting('audio_enabled', enabled);
+        });
+
+        // FAQ accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const targetId = question.dataset.target;
+                const answer = document.getElementById(targetId);
+                const icon = question.querySelector('i');
+                
+                if (answer.classList.contains('hidden')) {
+                    answer.classList.remove('hidden');
+                    icon.style.transform = 'rotate(180deg)';
+                } else {
+                    answer.classList.add('hidden');
+                    icon.style.transform = 'rotate(0deg)';
+                }
+            });
+        });
+
+        // Support modal
+        const supportModal = document.getElementById('supportModal');
+        const contactSupportBtn = document.getElementById('contactSupportBtn');
+        const closeSupportModal = document.getElementById('closeSupportModal');
+        const supportForm = document.getElementById('supportForm');
+
+        contactSupportBtn.addEventListener('click', () => {
+            supportModal.classList.remove('hidden');
+        });
+
+        closeSupportModal.addEventListener('click', () => {
+            supportModal.classList.add('hidden');
+        });
+
+        supportModal.addEventListener('click', (e) => {
+            if (e.target === supportModal) {
+                supportModal.classList.add('hidden');
+            }
+        });
+
+        supportForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(supportForm);
+            const data = Object.fromEntries(formData.entries());
+            
+            try {
+                const response = await fetch('/api/contact-support', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                
+                if (result.error) {
+                    alert('Error: ' + result.error);
+                } else {
+                    alert(result.message);
+                    supportModal.classList.add('hidden');
+                    supportForm.reset();
+                }
+            } catch (error) {
+                console.error('Support form error:', error);
+                alert('Failed to send message. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>

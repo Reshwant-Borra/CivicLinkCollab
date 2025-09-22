@@ -1,0 +1,17 @@
+# Flask and web framework dependencies
+Flask==2.3.3
+Flask-SQLAlchemy==3.0.5
+Flask-CORS==4.0.0
+
+# Database (using SQLite for simplicity)
+SQLAlchemy==2.0.21
+
+# Translation library
+deep-translator==1.11.4
+
+# Utilities
+python-dotenv==1.0.0
+requests==2.31.0
+
+# Development dependencies
+pytest==7.4.2
