@@ -198,8 +198,8 @@ export default function TranslationAssistant() {
                   <div className="text-xs text-muted-foreground mt-1">
                     {customText.length}/5000 characters
                   </div>
-                </div>
-                
+              </div>
+              
                 <div className="flex gap-3">
                   <Button
                     onClick={handleCustomTranslation}
@@ -218,7 +218,7 @@ export default function TranslationAssistant() {
                       </>
                     )}
                   </Button>
-                </div>
+              </div>
 
                 {/* Translation Results */}
                 {translatedText && (
@@ -229,12 +229,12 @@ export default function TranslationAssistant() {
                           <Languages className="h-5 w-5 text-primary" />
                           Translation Result
                         </CardTitle>
-                        <Button
-                          variant="outline"
-                          size="sm"
+                      <Button
+                        variant="outline"
+                        size="sm"
                           onClick={() => copyToClipboard(translatedText)}
-                          className="flex items-center gap-2"
-                        >
+                        className="flex items-center gap-2"
+                      >
                           {copied ? (
                             <>
                               <Check className="h-4 w-4" />
@@ -246,14 +246,14 @@ export default function TranslationAssistant() {
                               Copy
                             </>
                           )}
-                        </Button>
-                      </div>
+                      </Button>
+                    </div>
                     </CardHeader>
                     <CardContent>
                       <div className="bg-background p-4 rounded-lg border-2 border-dashed border-muted-foreground/20 mb-4">
                         <p className="text-base leading-relaxed font-medium">{translatedText}</p>
-                      </div>
-                      
+                  </div>
+                  
                       {translationResult && (
                         <div className="flex flex-wrap gap-4 text-sm">
                           <Badge variant="secondary" className="flex items-center gap-1">
@@ -270,14 +270,14 @@ export default function TranslationAssistant() {
                           <Badge variant="outline" className="flex items-center gap-1">
                             <span>Service: {translationResult.translation_service}</span>
                           </Badge>
-                        </div>
+                  </div>
                       )}
-                    </CardContent>
-                  </Card>
+                </CardContent>
+              </Card>
                 )}
-              </div>
-            </CardContent>
-          </Card>
+          </div>
+              </CardContent>
+            </Card>
 
         </div>
       </div>
